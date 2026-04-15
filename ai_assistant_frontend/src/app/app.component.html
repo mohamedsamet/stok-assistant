@@ -1,0 +1,99 @@
+<main class="container">
+  <section class="card">
+    <h2>Stock API Authentication</h2>
+    <div class="auth-grid">
+      <label>
+        Login
+        <input type="text" [(ngModel)]="login" placeholder="stock login" />
+      </label>
+
+      <label>
+        Password
+        <input type="password" [(ngModel)]="password" placeholder="stock password" />
+      </label>
+
+      <div class="auth-actions">
+        <button type="button" (click)="connectToStockApi()" [disabled]="loading || !login || !password">
+          Connect
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <header class="card page-header">
+    <div>
+      <h1>{{ title }}</h1>
+      <p class="subtitle">Stock database overview</p>
+    </div>
+    <div class="header-actions">
+      <button type="button" (click)="refreshDashboard()" [disabled]="loading">
+        {{ loading ? 'Loading...' : 'Refresh data' }}
+      </button>
+      <span class="sync-time" *ngIf="lastSync">{{ lastSync | date: 'dd/MM/yyyy HH:mm:ss' }}</span>
+    </div>
+  </header>
+
+  <section class="card">
+    <p class="status" [class.error]="!!errorMessage" [class.ok]="!errorMessage">
+      {{ errorMessage || statusMessage }}
+    </p>
+  </section>
+
+  <section class="kpi-grid">
+    <article class="card kpi-card">
+      <h3>Products in stock</h3>
+      <p class="kpi-value">{{ data.productCount }}</p>
+    </article>
+
+    <article class="card kpi-card">
+      <h3>Clients</h3>
+      <p class="kpi-value">{{ data.clientCount }}</p>
+    </article>
+
+    <article class="card kpi-card">
+      <h3>Invoices</h3>
+      <p class="kpi-value">{{ data.invoiceCount }}</p>
+    </article>
+
+    <article class="card kpi-card">
+      <h3>Total stock quantity</h3>
+      <p class="kpi-value">{{ data.totalStockQuantity }}</p>
+    </article>
+
+    <article class="card kpi-card">
+      <h3>Closed invoices</h3>
+      <p class="kpi-value">{{ data.closedInvoiceCount }}</p>
+    </article>
+
+    <article class="card kpi-card">
+      <h3>Total invoiced amount</h3>
+      <p class="kpi-value">{{ data.totalInvoicedAmount | number: '1.0-3' }}</p>
+    </article>
+  </section>
+
+  <section class="card">
+    <h2>Top products by quantity</h2>
+    <div class="table-wrapper" *ngIf="data.topProducts.length; else emptyProducts">
+      <table>
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Type</th>
+            <th class="text-right">Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of data.topProducts">
+            <td>{{ product.name }}</td>
+            <td>{{ product.type }}</td>
+            <td class="text-right">{{ product.quantity }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <ng-template #emptyProducts>
+      <p class="empty">No product data available.</p>
+    </ng-template>
+  </section>
+</main>

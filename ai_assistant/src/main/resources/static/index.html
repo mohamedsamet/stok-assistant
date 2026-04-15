@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Movement - Connectivity Test</title>
+    <link rel="stylesheet" href="/css/app.css">
+</head>
+<body>
+<main class="container">
+    <h1>Stock Movement Connectivity Test</h1>
+
+    <section class="card">
+        <h2>1) Database/API connectivity</h2>
+        <button id="testConnectionBtn">Test Connection</button>
+        <p id="connectionStatus" class="status">Not tested yet.</p>
+    </section>
+
+    <section class="card">
+        <h2>2) Create Product Movement</h2>
+        <form id="movementForm">
+            <div class="grid">
+                <label>Product Public ID
+                    <input id="productPublicId" required placeholder="UUID">
+                </label>
+                <label>Product Name
+                    <input id="productName" required>
+                </label>
+                <label>Movement Type
+                    <select id="movementType" required>
+                        <option>IN</option>
+                        <option>OUT</option>
+                        <option>ADJUSTMENT</option>
+                        <option>SALE</option>
+                        <option>TRANSFORMATION_INPUT</option>
+                        <option>TRANSFORMATION_OUTPUT</option>
+                    </select>
+                </label>
+                <label>Quantity
+                    <input id="quantity" type="number" step="0.0001" min="0.0001" required>
+                </label>
+                <label>Old Stock
+                    <input id="oldStock" type="number" step="0.0001" min="0" required>
+                </label>
+                <label>New Stock
+                    <input id="newStock" type="number" step="0.0001" min="0" required>
+                </label>
+                <label>Source Type
+                    <select id="sourceType" required>
+                        <option>INVOICE</option>
+                        <option>STATION</option>
+                        <option>MANUAL</option>
+                        <option>SYSTEM</option>
+                    </select>
+                </label>
+                <label>Source Reference
+                    <input id="sourceReference" placeholder="INV-2026-001">
+                </label>
+                <label>Movement Date
+                    <input id="movementDate" type="datetime-local" required>
+                </label>
+                <label>Comment
+                    <input id="comment">
+                </label>
+            </div>
+            <button type="submit">Create Movement</button>
+            <p id="createStatus" class="status"></p>
+        </form>
+    </section>
+
+    <section class="card">
+        <h2>3) Existing Movements</h2>
+        <button id="refreshBtn">Refresh List</button>
+        <table>
+            <thead>
+            <tr>
+                <th>Public ID</th>
+                <th>Product</th>
+                <th>Type</th>
+                <th>Qty</th>
+                <th>Old</th>
+                <th>New</th>
+                <th>Date</th>
+            </tr>
+            </thead>
+            <tbody id="movementsTableBody"></tbody>
+        </table>
+    </section>
+</main>
+
+<script src="/js/app.js"></script>
+</body>
+</html>
+
